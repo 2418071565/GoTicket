@@ -11,7 +11,7 @@ func CollectRoute(ser *gin.Engine) *gin.Engine {
 	{
 		auth_user_group := auth_group.Group("/userInfo")
 		{
-			auth_user_group.GET("", controllers.GetInfo)
+			auth_user_group.GET("", controllers.GetUserInfo)
 		}
 		auth_admin_group := auth_group.Group("/admin")
 		{

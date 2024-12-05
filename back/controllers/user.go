@@ -34,7 +34,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 }
 
 // 获取 User 所有信息
-func GetInfo(ctx *gin.Context) {
+func GetUserInfo(ctx *gin.Context) {
 	value, _ := ctx.Get("user")
 	user := value.(*dto.User)
 	user, err := models.User{}.GetUserById(user.ID)

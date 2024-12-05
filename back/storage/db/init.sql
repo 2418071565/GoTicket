@@ -32,8 +32,7 @@ CREATE TABLE IF NOT EXISTS `trains` (
 
 CREATE TABLE IF NOT EXISTS `routes` (
   `id` smallint unsigned AUTO_INCREMENT NOT NULL,
-  `distance` json DEFAULT NULL,
-  `price_pk` decimal(10,2) NOT NULL,
+  `price_pk` decimal(9, 2)  NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -42,21 +41,24 @@ CREATE TABLE IF NOT EXISTS `stations` (
   `name` varchar(32) NOT NULL,
   `postion` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `station_index` (`name`)
+  KEY `station_index` (`name`),
+  KEY `postion_index` (`postion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 CREATE TABLE IF NOT EXISTS `route_station` (
   `route_id` smallint unsigned NOT NULL,
   `station_id` smallint unsigned NOT NULL,
+  `distance_from_start` double NOT NULL,
   PRIMARY KEY (`route_id`,`station_id`),
   FOREIGN KEY (`route_id`) REFERENCES routes(`id`),
-  FOREIGN KEY (`station_id`) REFERENCES routes(`id`)
+  FOREIGN KEY (`station_id`) REFERENCES stations(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS `train_numbers` (
   `id` int unsigned AUTO_INCREMENT NOT NULL,
-  `status` varchar(255) NOT NULL,
+  `code` varchar(4) NOT NULL,
+  `status` enum('Online','Offline') NOT NULL,
   `available_seats` smallint unsigned NOT NULL,
   `start_time` datetime NOT NULL,
   `train_id` smallint unsigned NOT NULL,
